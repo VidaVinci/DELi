@@ -24,7 +24,7 @@ biopython==1.86 \
     --hash=sha256:f96b7441f456c7eecad5c6e61e75b0db1435c489be7cc5e4f97dd4e60921747c \
     --hash=sha256:fb3a11a98e49428720dca227e2a5bdd57c973ee7c4df3cf6734c0aa13fd134c7 \
     --hash=sha256:ffeba620c4786ea836efee235a9c6333b94e922b89de1449a4782dcc15246ff1
-    # via deli-chem
+    # via vv-deli-chem
 cfgv==3.5.0 \
     --hash=sha256:a8dc6b26ad22ff227d2634a65cb388215ce6cc96bbcc5cfde7641ae87e8dacc0 \
     --hash=sha256:d5b1034354820651caa73ede66a6294d6e95c1b00acc5e9b098e917404669132
@@ -32,7 +32,7 @@ cfgv==3.5.0 \
 click==8.3.1 \
     --hash=sha256:12ff4785d337a1bb490bb7e9c2b1ee5da3112e94a8622f26a6c77f5d2fc6842a \
     --hash=sha256:981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6
-    # via deli-chem
+    # via vv-deli-chem
 colorama==0.4.6 ; sys_platform == 'win32' \
     --hash=sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44 \
     --hash=sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6
@@ -87,12 +87,61 @@ contourpy==1.3.3 \
     --hash=sha256:fd914713266421b7536de2bfa8181aa8c699432b6763a0ea64195ebe28bff6a9 \
     --hash=sha256:fde6c716d51c04b1c25d0b90364d0be954624a0ee9d60e23e850e8d48353d07a
     # via matplotlib
+coverage==7.15.0 \
+    --hash=sha256:08fb028000ed0aaa0a4cbdfbb98be7cb42f370db973fbbb469733505ab20e13e \
+    --hash=sha256:0bf781da64326b677be344df505171435b6f58716108606621d5d27d964fff8b \
+    --hash=sha256:0bfc0be1f702042207a93a00523b1065ee1fe951e96edf311581c0bbc2e34888 \
+    --hash=sha256:0e4950c9d6d3e39c64c991814ff315e2d0b9cb8152363594212c9e55208c0a8f \
+    --hash=sha256:110cbdf8d2e216577312cf06ccf85539c0e5a5420ef747e4a4719b5e483c88cd \
+    --hash=sha256:13fb759be317fdc62e0f56bffdf61cfcb45c7761ad6b71e3e583e71a67ae753c \
+    --hash=sha256:27f31ecb458da3f859aab3f15ada871eb7a7768807d88df4a9f186bb17737970 \
+    --hash=sha256:2bcf9afaf064172c6ec3c58a325a9957ad1178c05dd934e25f253321776e0676 \
+    --hash=sha256:2c57a275078ee3fa185f83e400f765bc764a549de66d99b47881645cbd4ea629 \
+    --hash=sha256:2c5d4619214f1d9993e7b00a8600d14614b7e9d84e89507460b126aa5e6559e5 \
+    --hash=sha256:2c6f0fa473003905c6d5bac328ee4eba9fbea654f15bc24b8a3274b23363fa99 \
+    --hash=sha256:346771144d34f7fa84ec28386f78e0f31653f33cf35e19d253d5b35f9e8201da \
+    --hash=sha256:363ab38cc78b615f11c9cac3cf1d7eef950c18b9fdedfb9066f59461dcf84d68 \
+    --hash=sha256:3812c61afc6685c7999b39320779ab8f43b7a3081fdb0def39976e56fbdb9a21 \
+    --hash=sha256:3bb3040e9f4bbe26fcb0cd7cc85ac63e630d3f3a9c74f027abf4caa27e706663 \
+    --hash=sha256:41cb79af843222e11da87127ad0ecbfa878abadd0f770a4a99391a27d3887324 \
+    --hash=sha256:54fd9c53a5fafff509195f1b6a3f9be615d8e8362a3629ff1de23d270c03c86b \
+    --hash=sha256:56da6a4cbe8f7e9e80bd072ca9cefe67d7106a440a7ec06519ec6507ac94ad19 \
+    --hash=sha256:5be4caf3b28836f078abe700f8944dac4a65d78f16d6c600c89cb624e5535782 \
+    --hash=sha256:65a6b6164ee5c39e2f3803f314292d6c61a607ba7fee253d1e03c42dc3903502 \
+    --hash=sha256:6cb3602054ccbe9f0d8c2dc04bbeba90d5719236e2cd06e042ddd6d3fc7b6e37 \
+    --hash=sha256:75128817f95a5c45bb01d65fd2d8b9cb54bbe03d81608fb70e3e14b437ad56c2 \
+    --hash=sha256:769e8ece11a596315ebf5aa7ec383aeeed016c091d2bf6363ffb996d41529092 \
+    --hash=sha256:781a704516e2d8346fbbd5be6c6f3412dd824785146528b3a01816f26c081007 \
+    --hash=sha256:7d2008989ef8fe54188d3f3bfa2e3099b025af11e90a6a1b9e7dc433d04263d8 \
+    --hash=sha256:87b47553097ba185ed964866078e7e63adea9f5f51b5f39691c34f30afd21080 \
+    --hash=sha256:94c9686bfe8a9a6810297aecbd99beaa3445f9e8dc2f80b1382cca0d86b64461 \
+    --hash=sha256:9887bb428fe2d4cd4bee89bac1a6c9932f484afd5b36fbd4ff6ea5f825bb1f5e \
+    --hash=sha256:9ac3fe7a1435986463eaa8ee253ae2f2a268709ba4ae5c7dd1f52a05391ad78f \
+    --hash=sha256:9bd671c25f9d85f09d7ec481d0e43d5139f486c06a37139847a7ce569788af72 \
+    --hash=sha256:a263060f1de0b4b74b4e089c2a70b8003b3781c733329a9c8fd54995328f9950 \
+    --hash=sha256:ab282853ed5fbd64bbb162f19cb8fcb7087187508a6374b4f9c34ec1577c4e8f \
+    --hash=sha256:aeefb2dd178fe7eee79f0ad25d75855cb35ee9ed472db2c5ea06f5b4fd00cec5 \
+    --hash=sha256:baf06bc987115d6fb938d403f7eab684a057766c490367999a2b71a6883110c6 \
+    --hash=sha256:bb25d825d885ca8036795dacfc3924d33091fc76d71ebc99420c6b79e77d96fa \
+    --hash=sha256:bbcbb317c2e5ded5b21104af81c29f391be2af98d065693ffbe8d23949b948e5 \
+    --hash=sha256:bd4a1b44bcb65ee29e947ac92bbee04956df3a6bfc6143641bb6cae7ede00fc9 \
+    --hash=sha256:c48decf16e0dfd5b049c7d5e82200c23c08126719142998d4f172444e3d0529e \
+    --hash=sha256:cc78d9843bd576fbe2118248258d485e968dc535f95ed504a7b0867ba9b51389 \
+    --hash=sha256:d34a010905fb6401324ba016b5da03d574967f7b21ce48ea41e66f0f1f95f641 \
+    --hash=sha256:d5cf007add5ab4bb8fa9f4c77e3732127c9e6cad501d7db43355fbfafca0be84 \
+    --hash=sha256:dd58ad1404704303ca8d4f4b8a1095e7cbc7040ef17a66df1e6619aa10176430 \
+    --hash=sha256:f00d5ae1dd2fe13fb8186e3e7d37bcbd8b25c0d764ff7d1b32cef9be058510a8 \
+    --hash=sha256:f0405f2ff97b1c4c0e782cb32e02f32369bcf2e6b618b591d67e1ea754575dfe \
+    --hash=sha256:f64627d55def5a43282d70e08396672692f77e4da610a5bb8bb4060b432b6859 \
+    --hash=sha256:fb7dc0c3b7d8a1077abea0b8546ebc5e26d6ef6ecefc2f0f5ad2b8a53bdad837 \
+    --hash=sha256:fe9c87ff42e5472d80d21704972e1f96e104a0a599d77c5e35db5a3c562e2571
+    # via pytest-cov
 cutadapt==5.2 \
     --hash=sha256:1b7ec1b89ad59eac9cb8576b88439a0bceb7952b97afd4b89a1e0fa2305c8e38 \
     --hash=sha256:2394deead42ecae5fe0fdf369e35f3e2afed770e14059582272779c2e8295d3c \
     --hash=sha256:96b60b935e2439787544c5cc44def71ea8a8278635edeaa5baff2538a46e7bdb \
     --hash=sha256:dd3c7f776c2193ba7a9c11efb01588177b599ab53ddbe037ecc6eb70662b87ce
-    # via deli-chem
+    # via vv-deli-chem
 cycler==0.12.1 \
     --hash=sha256:85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30 \
     --hash=sha256:88bb128f02ba341da8ef447245a9e138fae777f6a23943da4540077d3601eb1c
@@ -109,7 +158,7 @@ dnaio==1.2.3 \
     --hash=sha256:acc683a09afd9aef6ffa1d6c76a60a66830f82405d3320330e54565a847b628b
     # via
     #   cutadapt
-    #   deli-chem
+    #   vv-deli-chem
 filelock==3.24.2 \
     --hash=sha256:667d7dc0b7d1e1064dd5f8f8e80bdac157a6482e8d2e02cd16fd3b6b33bd6556 \
     --hash=sha256:c22803117490f156e59fafce621f0550a7a853e2bbf4f87f112b11d469b6c81b
@@ -177,7 +226,7 @@ isal==1.8.0 ; platform_machine == 'AMD64' or platform_machine == 'aarch64' or pl
 jinja2==3.1.6 \
     --hash=sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d \
     --hash=sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67
-    # via deli-chem
+    # via vv-deli-chem
 joblib==1.5.3 \
     --hash=sha256:5fc3c5039fc5ca8c0276333a188bbd59d6b7ab37fe6632daa76bc7f9ec18e713 \
     --hash=sha256:8561a3269e6801106863fd0d6d84bb737be9e7631e33aaed3fb9ce5953688da3
@@ -290,7 +339,7 @@ levenshtein==0.27.3 \
     --hash=sha256:f067092c67464faab13e00a5c1a80da93baca8955d4d49579861400762e35591 \
     --hash=sha256:fa00ab389386032b02a1c9050ec3c6aa824d2bbcc692548fdc44a46b71c058c6 \
     --hash=sha256:ffdca6989368cc64f347f0423c528520f12775b812e170a0eb0c10e4c9b0f3ff
-    # via deli-chem
+    # via vv-deli-chem
 librt==0.8.1 ; platform_python_implementation != 'PyPy' \
     --hash=sha256:01170b6729a438f0dedc4a26ed342e3dc4f02d1000b4b19f980e1877f0c297e6 \
     --hash=sha256:086a32dbb71336627e78cc1d6ee305a68d038ef7d4c39aaff41ae8c9aa46e91a \
@@ -422,12 +471,12 @@ matplotlib==3.11.0 \
     --hash=sha256:dfabef0230d0697aa0d717385194dd41162e00207a68bf4abf94c2bf4c27dca0 \
     --hash=sha256:e6b3e64dea5062c570f04358e2711859f3531b459f29516274fbad889079e4f3
     # via
-    #   deli-chem
     #   matplotlib-venn
     #   seaborn
+    #   vv-deli-chem
 matplotlib-venn==1.1.2 \
     --hash=sha256:6f2b07a03e9bb5a62de2f32f965216739e175176f9d654dd19e7af2c22ec36e3
-    # via deli-chem
+    # via vv-deli-chem
 mypy==1.19.1 \
     --hash=sha256:016f2246209095e8eda7538944daa1d60e1e8134d98983b9fc1e92c1fc0cb8dd \
     --hash=sha256:06e6170bd5836770e8104c8fdd58e5e725cfeb309f0a6c681a811f557e97eac1 \
@@ -467,7 +516,7 @@ numba==0.63.1 \
     --hash=sha256:f0938764afa82a47c0e895637a6c55547a42c9e1d35cac42285b1fa60a8b02bb \
     --hash=sha256:f180883e5508940cc83de8a8bea37fc6dd20fbe4e5558d4659b8b9bef5ff4731 \
     --hash=sha256:f90a929fa5094e062d4e0368ede1f4497d5e40f800e80aa5222c4734236a2894
-    # via deli-chem
+    # via vv-deli-chem
 numpy==2.3.5 \
     --hash=sha256:00dc4e846108a382c5869e77c6ed514394bdeb3403461d25a829711041217d5b \
     --hash=sha256:0472f11f6ec23a74a906a00b48a4dcf3849209696dff7c189714511268d103ae \
@@ -566,8 +615,8 @@ pandas==3.0.3 \
     --hash=sha256:dd1a5d1def6a46002e964510bdc67c368aa0951df5d1d9f8365336f5a1f490cd \
     --hash=sha256:e3a2ec42c98ffa2565a67e08e218d06d72576d758d90facb7c00805194d8f360
     # via
-    #   deli-chem
     #   seaborn
+    #   vv-deli-chem
 pathspec==1.0.4 \
     --hash=sha256:0210e2ae8a21a9137c0d470578cb0e595af87edaa6ebf12ff176f14a02e0e645 \
     --hash=sha256:fb6ae2fd4e7c921a165808a552060e722767cfa526f99ca5156ed2ce45a5c723
@@ -634,15 +683,17 @@ platformdirs==4.9.2 \
 plotly==6.5.2 \
     --hash=sha256:7478555be0198562d1435dee4c308268187553cc15516a2f4dd034453699e393 \
     --hash=sha256:91757653bd9c550eeea2fa2404dba6b85d1e366d54804c340b2c874e5a7eb4a4
-    # via deli-chem
+    # via vv-deli-chem
 pluggy==1.6.0 \
     --hash=sha256:7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3 \
     --hash=sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746
-    # via pytest
+    # via
+    #   pytest
+    #   pytest-cov
 polars==1.38.1 \
     --hash=sha256:803a2be5344ef880ad625addfb8f641995cfd777413b08a10de0897345778239 \
     --hash=sha256:a29479c48fed4984d88b656486d221f638cba45d3e961631a50ee5fdde38cb2c
-    # via deli-chem
+    # via vv-deli-chem
 polars-runtime-32==1.38.1 \
     --hash=sha256:04f20ed1f5c58771f34296a27029dc755a9e4b1390caeaef8f317e06fdfce2ec \
     --hash=sha256:08c2b3b93509c1141ac97891294ff5c5b0c548a373f583eaaea873a4bf506437 \
@@ -698,6 +749,10 @@ pyparsing==3.3.2 \
 pytest==9.0.2 \
     --hash=sha256:711ffd45bf766d5264d487b917733b453d917afd2b0ad65223959f59089f875b \
     --hash=sha256:75186651a92bd89611d1d9fc20f0b4345fd827c41ccd5c299a868a05d70edf11
+    # via pytest-cov
+pytest-cov==7.1.0 \
+    --hash=sha256:30674f2b5f6351aa09702a9c8c364f6a01c27aae0c1366ae8016160d1efc56b2 \
+    --hash=sha256:a0461110b7865f9a271aa1b51e516c9a95de9d696734a2f71e3e78f46e1d4678
 python-dateutil==2.9.0.post0 \
     --hash=sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3 \
     --hash=sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427
@@ -735,8 +790,8 @@ pyyaml==6.0.3 \
     --hash=sha256:ee2922902c45ae8ccada2c5b501ab86c36525b883eff4255313a253a3160861c \
     --hash=sha256:f7057c9a337546edc7973c0d3ba84ddcdf0daa14533c2065749c9075001090e6
     # via
-    #   deli-chem
     #   pre-commit
+    #   vv-deli-chem
 rapidfuzz==3.14.3 \
     --hash=sha256:010e12e2411a4854b0434f920e72b717c43f8ec48d57e7affe5c42ecfa05dd0e \
     --hash=sha256:152555187360978119e98ce3e8263d70dd0c40c7541193fc302e9b7125cf8f58 \
@@ -793,7 +848,7 @@ rdkit==2025.9.5 \
     --hash=sha256:94b6173fb9c7701d2479018a69c057429f2507a4cfe5ee1f2e430b0f8b0d7afc \
     --hash=sha256:957050e2c5b9cf623dc2a82f10847f7f6cebd15ef2edac40cd10120117c9927c \
     --hash=sha256:e31e1924e4d0ce19e5474037875294937bc5835b2f95d2c2c3025d6cd4ec4dfa
-    # via deli-chem
+    # via vv-deli-chem
 regex==2026.1.15 \
     --hash=sha256:05d75a668e9ea16f832390d22131fe1e8acc8389a694c8febc3e340b0f810b93 \
     --hash=sha256:0751a26ad39d4f2ade8fe16c59b2bf5cb19eb3d2cd543e709e583d559bd9efde \
@@ -860,7 +915,7 @@ regex==2026.1.15 \
     --hash=sha256:f9ca1cbdc0fbfe5e6e6f8221ef2309988db5bcede52443aeaee9a4ad555e0dac \
     --hash=sha256:fe2fda4110a3d0bc163c2e0664be44657431440722c5c5315c65155cab92f9e5 \
     --hash=sha256:febd38857b09867d3ed3f4f1af7d241c5c50362e25ef43034995b77a50df494e
-    # via deli-chem
+    # via vv-deli-chem
 ruff==0.15.1 \
     --hash=sha256:1d83466455fdefe60b8d9c8df81d3c1bbb2115cede53549d3b522ce2bc703899 \
     --hash=sha256:1fe5c41ab43e3a06778844c586251eb5a510f67125427625f9eb2b9526535779 \
@@ -900,7 +955,7 @@ scikit-learn==1.9.0 \
     --hash=sha256:d77f54c017633791bc0225a43e2f8d03745fdcfe4880268fcc4df15f505dec2e \
     --hash=sha256:da76d09304a4706db7cc1e3ebaa3b6b98a67365cc11d2996c4f1e58ba47df714 \
     --hash=sha256:ee1a8db2c18c08e34c7412d4b10be1cac214cd4ea7dc9715a6a327eb49a37c96
-    # via deli-chem
+    # via vv-deli-chem
 scipy==1.18.0 \
     --hash=sha256:09143f676d157d9f546d663504ef9c1becb819824f1afc018814176411942446 \
     --hash=sha256:0d13bca67c096d89fb95ced0d8921807300fce0275643aef9533cc63a0773468 \
@@ -934,13 +989,13 @@ scipy==1.18.0 \
     --hash=sha256:f2a6af57bd9e4a75d70e4117e78a1bbee84f79ae3fbb6d0111005d6ebcc4cb8d \
     --hash=sha256:f351e0dd702687d12a402b867a1b4146a256923e1c38317cbc472f6372b94707
     # via
-    #   deli-chem
     #   matplotlib-venn
     #   scikit-learn
+    #   vv-deli-chem
 seaborn==0.13.2 \
     --hash=sha256:636f8336facf092165e27924f223d3c62ca560b1f2bb5dff7ab7fad265361987 \
     --hash=sha256:93e60a40988f4d65e9f4885df477e2fdaff6b73a9ded434c1ab356dd57eefff7
-    # via deli-chem
+    # via vv-deli-chem
 six==1.17.0 \
     --hash=sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274 \
     --hash=sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81
@@ -952,7 +1007,7 @@ threadpoolctl==3.6.0 \
 tqdm==4.67.3 \
     --hash=sha256:7d825f03f89244ef73f1d4ce193cb1774a8179fd96f31d7e1dcde62092b960bb \
     --hash=sha256:ee1e4c0e59148062281c49d80b25b67771a127c85fc9676d3be5f243206826bf
-    # via deli-chem
+    # via vv-deli-chem
 typing-extensions==4.15.0 \
     --hash=sha256:0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466 \
     --hash=sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548
