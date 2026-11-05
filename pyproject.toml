@@ -1,6 +1,6 @@
 [project]
 # Use a different package name for the VidaVinci fork.
-# We will also manually add an additional . sanze to the version
+# We will also manually add an additional . stanza to the version
 # name = "deli-chem"
 name = "vv-deli-chem"
 version = "0.2.1.0"
