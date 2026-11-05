@@ -1,6 +1,9 @@
 [project]
-name = "deli-chem"
-version = "0.2.1"
+# Use a different package name for the VidaVinci fork.
+# We will also manually add an additional . stanza to the version
+# name = "deli-chem"
+name = "vv-deli-chem"
+version = "0.2.1.0"
 description = "DNA encoded library sequence analysis software with custom library design support"
 readme = "README.md"
 license = "MIT"

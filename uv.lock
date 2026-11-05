@@ -449,94 +449,6 @@ wheels = [
 ]
 
 [[package]]
-name = "deli-chem"
-version = "0.2.1"
-source = { editable = "." }
-dependencies = [
-    { name = "biopython" },
-    { name = "click" },
-    { name = "cutadapt" },
-    { name = "dnaio" },
-    { name = "jinja2" },
-    { name = "levenshtein" },
-    { name = "matplotlib" },
-    { name = "matplotlib-venn" },
-    { name = "numba" },
-    { name = "pandas" },
-    { name = "plotly" },
-    { name = "polars" },
-    { name = "pyyaml" },
-    { name = "rdkit" },
-    { name = "regex" },
-    { name = "scikit-learn" },
-    { name = "scipy" },
-    { name = "seaborn" },
-    { name = "tqdm" },
-]
-
-[package.optional-dependencies]
-ml = [
-    { name = "torch" },
-    { name = "torch-geometric" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "coverage" },
-    { name = "mypy" },
-    { name = "pre-commit" },
-    { name = "pyarrow" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "ruff" },
-]
-docs = [
-    { name = "sphinx" },
-    { name = "sphinx-rtd-theme" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "biopython", specifier = ">=1.86" },
-    { name = "click", specifier = ">=8.3.1" },
-    { name = "cutadapt", specifier = ">=5.2" },
-    { name = "dnaio", specifier = ">=1.2.3" },
-    { name = "jinja2", specifier = ">=3.1.6" },
-    { name = "levenshtein", specifier = ">=0.27.3" },
-    { name = "matplotlib", specifier = ">=3.9.3" },
-    { name = "matplotlib-venn", specifier = ">=0.11.10" },
-    { name = "numba", specifier = ">=0.63.1" },
-    { name = "pandas", specifier = ">=2.2.3" },
-    { name = "plotly", specifier = ">=6.5.2" },
-    { name = "polars", specifier = ">=1.38.1" },
-    { name = "pyyaml", specifier = ">=6.0.3" },
-    { name = "rdkit", specifier = ">=2025.9.5" },
-    { name = "regex", specifier = ">=2026.1.15" },
-    { name = "scikit-learn", specifier = ">=1.4.2" },
-    { name = "scipy", specifier = ">=1.14.1" },
-    { name = "seaborn", specifier = ">=0.12.2" },
-    { name = "torch", marker = "extra == 'ml'", specifier = ">=2.2.0" },
-    { name = "torch-geometric", marker = "extra == 'ml'", specifier = ">=2.6.1" },
-    { name = "tqdm", specifier = ">=4.67.3" },
-]
-provides-extras = ["ml"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "coverage", specifier = ">=7.15.0" },
-    { name = "mypy", specifier = ">=1.19.1" },
-    { name = "pre-commit", specifier = ">=4.5.1" },
-    { name = "pyarrow", specifier = ">=23.0.1" },
-    { name = "pytest", specifier = ">=9.0.2" },
-    { name = "pytest-cov", specifier = ">=7.1.0" },
-    { name = "ruff", specifier = ">=0.15.1" },
-]
-docs = [
-    { name = "sphinx", specifier = ">=9.1.0" },
-    { name = "sphinx-rtd-theme", specifier = ">=3.1.0" },
-]
-
-[[package]]
 name = "distlib"
 version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2438,6 +2350,94 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d2/03/a94d404ca09a89a7301a7008467aed525d4cdeb9186d262154dd23208709/virtualenv-20.38.0.tar.gz", hash = "sha256:94f39b1abaea5185bf7ea5a46702b56f1d0c9aa2f41a6c2b8b0af4ddc74c10a7", size = 5864558, upload-time = "2026-02-19T07:48:02.385Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/42/d7/394801755d4c8684b655d35c665aea7836ec68320304f62ab3c94395b442/virtualenv-20.38.0-py3-none-any.whl", hash = "sha256:d6e78e5889de3a4742df2d3d44e779366325a90cf356f15621fddace82431794", size = 5837778, upload-time = "2026-02-19T07:47:59.778Z" },
+]
+
+[[package]]
+name = "vv-deli-chem"
+version = "0.2.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "biopython" },
+    { name = "click" },
+    { name = "cutadapt" },
+    { name = "dnaio" },
+    { name = "jinja2" },
+    { name = "levenshtein" },
+    { name = "matplotlib" },
+    { name = "matplotlib-venn" },
+    { name = "numba" },
+    { name = "pandas" },
+    { name = "plotly" },
+    { name = "polars" },
+    { name = "pyyaml" },
+    { name = "rdkit" },
+    { name = "regex" },
+    { name = "scikit-learn" },
+    { name = "scipy" },
+    { name = "seaborn" },
+    { name = "tqdm" },
+]
+
+[package.optional-dependencies]
+ml = [
+    { name = "torch" },
+    { name = "torch-geometric" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "coverage" },
+    { name = "mypy" },
+    { name = "pre-commit" },
+    { name = "pyarrow" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "ruff" },
+]
+docs = [
+    { name = "sphinx" },
+    { name = "sphinx-rtd-theme" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "biopython", specifier = ">=1.86" },
+    { name = "click", specifier = ">=8.3.1" },
+    { name = "cutadapt", specifier = ">=5.2" },
+    { name = "dnaio", specifier = ">=1.2.3" },
+    { name = "jinja2", specifier = ">=3.1.6" },
+    { name = "levenshtein", specifier = ">=0.27.3" },
+    { name = "matplotlib", specifier = ">=3.9.3" },
+    { name = "matplotlib-venn", specifier = ">=0.11.10" },
+    { name = "numba", specifier = ">=0.63.1" },
+    { name = "pandas", specifier = ">=2.2.3" },
+    { name = "plotly", specifier = ">=6.5.2" },
+    { name = "polars", specifier = ">=1.38.1" },
+    { name = "pyyaml", specifier = ">=6.0.3" },
+    { name = "rdkit", specifier = ">=2025.9.5" },
+    { name = "regex", specifier = ">=2026.1.15" },
+    { name = "scikit-learn", specifier = ">=1.4.2" },
+    { name = "scipy", specifier = ">=1.14.1" },
+    { name = "seaborn", specifier = ">=0.12.2" },
+    { name = "torch", marker = "extra == 'ml'", specifier = ">=2.2.0" },
+    { name = "torch-geometric", marker = "extra == 'ml'", specifier = ">=2.6.1" },
+    { name = "tqdm", specifier = ">=4.67.3" },
+]
+provides-extras = ["ml"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "coverage", specifier = ">=7.15.0" },
+    { name = "mypy", specifier = ">=1.19.1" },
+    { name = "pre-commit", specifier = ">=4.5.1" },
+    { name = "pyarrow", specifier = ">=23.0.1" },
+    { name = "pytest", specifier = ">=9.0.2" },
+    { name = "pytest-cov", specifier = ">=7.1.0" },
+    { name = "ruff", specifier = ">=0.15.1" },
+]
+docs = [
+    { name = "sphinx", specifier = ">=9.1.0" },
+    { name = "sphinx-rtd-theme", specifier = ">=3.1.0" },
 ]
 
 [[package]]
