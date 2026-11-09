@@ -1067,7 +1067,7 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
             out_file = open(out_loc, "w")
         else:
             out_file = gzip.open(out_loc, "wt")
-        writer = lambda x: out_file.write("\n".join(["\t".join([str(val) for val in rd.values()]).strip() for rd in x]))
+        writer = lambda x: out_file.write("\n".join(["\t".join([str(val) for val in rd.values()]).strip() for rd in x]) + "\n")
         _header = ["library_id", "bb_ids", "count"]
         if keep_raw_count:
             _header.append("raw_count")
