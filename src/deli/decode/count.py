@@ -116,17 +116,23 @@ def _count_connected_components(graph: dict[str, list[str]]) -> int:
     """
     visited = set()
     count = 0
+    all_component_sizes = []
     for node in graph:
         if node not in visited:
             count += 1
             stack = [node]
             visited.add(node)
+            component_size = 0
             while stack:
+                component_size += 1
                 current = stack.pop()
                 for neighbor in graph[current]:
                     if neighbor not in visited:
                         visited.add(neighbor)
                         stack.append(neighbor)
+            all_component_sizes.append(component_size)
+
+    # TODO(VV): Also return all_component_sizes
     return count
 
 
@@ -207,4 +213,6 @@ def corrected_count(umis: dict[str, int], method: Literal["cluster", "directiona
     else:
         raise ValueError(f"Unrecognized method '{method}' for corrected_count. Options are ['cluster', 'directional']")
 
+    # TODO(VV): we need to return another value from this point.
+    # Not just the number of connected coponents, but the size of those components
     return _count_connected_components(graph)
