@@ -1008,7 +1008,7 @@ def collect_decodes(ctx, decoded_reads, score_threshold, out_loc, compress):
 @click.option("--keep-dedup-count", "-d", is_flag=True, help="Keep deduplicated count in output; ignored unless --cluster-umis is used")
 @click.option("--output-format", "-f", type=click.Choice(["tsv", "gzip", "parquet"]), default="tsv", help="Output file format")
 @click.option("--use-tqdm", "-t", is_flag=True, help="Use tqdm to show progress")
-@click.option("--out-loc-count-distribution", type=click.Path(), required=False, default=None, help="File name for outputting the distributions of clustered umi counts")
+@click.option("--out-loc-count-distribution", type=click.Path(), required=False, default=None, help="Custom path for the JSON output of UMI count distributions")
 @click.pass_context
 @with_deli_quote
 def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_count, keep_dedup_count, output_format, use_tqdm, out_loc_count_distribution):
@@ -1063,6 +1063,18 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
         is_compressed=compress,
     )
 
+    # default the count distribution file to sit next to the counts output (e.g. counted_compounds_count_distribution.json)
+    if out_loc_count_distribution is None:
+        out_loc_count_distribution = Path("./umi_count_distribution.json")
+    out_loc_count_distribution = _standardize_and_validate_output_loc(
+        out_loc_count_distribution,
+        is_file=True,
+        can_exist=True,
+        overwrite=True,
+        extension=".json",
+        is_compressed=False,
+    )
+
     # initialize writer
     if output_format == "tsv":
         if not compress:
@@ -1110,12 +1122,12 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
             raw_count = sum([count_struct["c"] for count_struct in cpd_info["umi_counts"]])
             dedup_count = len(cpd_info["umi_counts"])
             count = dedup_count  # default to dedup count if not clustering
+            # count the uncorrected umi distribution counts
             umi_count_distribution.update(count_struct["c"] for count_struct in cpd_info["umi_counts"])
             if cluster_umis:
                 umi_counts_by_seq = {item["k"]: item["c"] for item in cpd_info["umi_counts"]}
-                # TODO(VV): we need to get the *corrected* umi counts as well.
-                # Then update clustered_umi_count_distribution similar to above)
                 count, all_component_sizes = corrected_count(umi_counts_by_seq)
+                # track the *corrected* umi counts as well
                 clustered_umi_count_distribution.update(all_component_sizes)
             # prepare output info
             row = {
@@ -1144,13 +1156,20 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
         out_file.close()
     logger.debug("closed output file")
 
-    # TODO(VV): then we need to write umi_count_distribution and clustered_umi_count_distribution
-    # to a file. This should have an output kind of like DecodeStatistics.
-    # To follow the conventions elsewhere, we probably should create another class
-    # in stats.py similar to DecodeSummary or DecodeStatistics. May even make sense to
-    # have that be mutable and used above instead of the Counter objects diectly
-
     logger.info(f"wrote {_ticker} compounds to: '{out_loc}'")
+
+    # write the count distributions
+    distributions = {
+        "umi_count_distribution": umi_count_distribution,
+        "clustered_umi_count_distribution": clustered_umi_count_distribution,
+    }
+    with open(out_loc_count_distribution, "w") as dist_file:
+        json.dump(
+            {name: {str(k): v for k, v in sorted(dist.items())} for name, dist in distributions.items()},
+            dist_file,
+            indent=4,
+        )
+    logger.info(f"wrote count distributions to: '{out_loc_count_distribution}'")
 
 
 @decode_group.command(name="report")
