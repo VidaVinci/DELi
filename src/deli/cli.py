@@ -1063,7 +1063,7 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
         is_compressed=compress,
     )
 
-    # default the count distribution file to sit next to the counts output (e.g. counted_compounds_count_distribution.json)
+    # prepare the output path of the UMI count distributions
     if out_loc_count_distribution is None:
         out_loc_count_distribution = Path("./umi_count_distribution.json")
     out_loc_count_distribution = _standardize_and_validate_output_loc(
