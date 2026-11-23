@@ -1021,6 +1021,7 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
     NOTE: "gzip" output format will generate a gzip compressed TSV file. Writing to output occurs in batches.
     """
     from deli.decode.count import corrected_count
+    from deli.decode.stats import CountStatistics
     import json
 
     # check conditional imports
@@ -1111,8 +1112,7 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
     _batch_size = 5000
     _batch = []
     _ticker = 0
-    umi_count_distribution = collections.Counter()
-    clustered_umi_count_distribution = collections.Counter()
+    count_stats = CountStatistics()
     with _open_text_file(Path(collected_decodes)) as in_file:
         for line in tqdm(in_file, desc="Counting compounds", disable=not use_tqdm):
             _ticker += 1
@@ -1123,12 +1123,12 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
             dedup_count = len(cpd_info["umi_counts"])
             count = dedup_count  # default to dedup count if not clustering
             # count the uncorrected umi distribution counts
-            umi_count_distribution.update(count_struct["c"] for count_struct in cpd_info["umi_counts"])
+            count_stats.umi_count_distribution.update(count_struct["c"] for count_struct in cpd_info["umi_counts"])
             if cluster_umis:
                 umi_counts_by_seq = {item["k"]: item["c"] for item in cpd_info["umi_counts"]}
                 count, all_component_sizes = corrected_count(umi_counts_by_seq)
                 # track the *corrected* umi counts as well
-                clustered_umi_count_distribution.update(all_component_sizes)
+                count_stats.clustered_umi_count_distribution.update(all_component_sizes)
             # prepare output info
             row = {
                 "library_id": cpd_info["library_id"],
@@ -1159,16 +1159,7 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
     logger.info(f"wrote {_ticker} compounds to: '{out_loc}'")
 
     # write the count distributions
-    distributions = {
-        "umi_count_distribution": umi_count_distribution,
-        "clustered_umi_count_distribution": clustered_umi_count_distribution,
-    }
-    with open(out_loc_count_distribution, "w") as dist_file:
-        json.dump(
-            {name: {str(k): v for k, v in sorted(dist.items())} for name, dist in distributions.items()},
-            dist_file,
-            indent=4,
-        )
+    count_stats.to_file(out_loc_count_distribution)
     logger.info(f"wrote count distributions to: '{out_loc_count_distribution}'")
 
 
