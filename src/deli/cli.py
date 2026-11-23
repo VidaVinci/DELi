@@ -2,6 +2,7 @@
 
 """command line functions for deli"""
 
+import collections
 import configparser
 import csv
 import datetime
@@ -1007,9 +1008,10 @@ def collect_decodes(ctx, decoded_reads, score_threshold, out_loc, compress):
 @click.option("--keep-dedup-count", "-d", is_flag=True, help="Keep deduplicated count in output; ignored unless --cluster-umis is used")
 @click.option("--output-format", "-f", type=click.Choice(["tsv", "gzip", "parquet"]), default="tsv", help="Output file format")
 @click.option("--use-tqdm", "-t", is_flag=True, help="Use tqdm to show progress")
+@click.option("--out-loc-count-distribution", type=click.Path(), required=False, default=None, help="File name for outputting the distributions of clustered umi counts")
 @click.pass_context
 @with_deli_quote
-def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_count, keep_dedup_count, output_format, use_tqdm):
+def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_count, keep_dedup_count, output_format, use_tqdm, out_loc_count_distribution):
     """
     Count compounds from collected decoded file
 
@@ -1097,6 +1099,8 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
     _batch_size = 5000
     _batch = []
     _ticker = 0
+    umi_count_distribution = collections.Counter()
+    clustered_umi_count_distribution = collections.Counter()
     with _open_text_file(Path(collected_decodes)) as in_file:
         for line in tqdm(in_file, desc="Counting compounds", disable=not use_tqdm):
             _ticker += 1
@@ -1106,10 +1110,13 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
             raw_count = sum([count_struct["c"] for count_struct in cpd_info["umi_counts"]])
             dedup_count = len(cpd_info["umi_counts"])
             count = dedup_count  # default to dedup count if not clustering
+            umi_count_distribution.update(count_struct["c"] for count_struct in cpd_info["umi_counts"])
             if cluster_umis:
                 umi_counts_by_seq = {item["k"]: item["c"] for item in cpd_info["umi_counts"]}
-                count = corrected_count(umi_counts_by_seq)
-
+                # TODO(VV): we need to get the *corrected* umi counts as well.
+                # Then update clustered_umi_count_distribution similar to above)
+                count, all_component_sizes = corrected_count(umi_counts_by_seq)
+                clustered_umi_count_distribution.update(all_component_sizes)
             # prepare output info
             row = {
                 "library_id": cpd_info["library_id"],
@@ -1136,6 +1143,12 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
     else:
         out_file.close()
     logger.debug("closed output file")
+
+    # TODO(VV): then we need to write umi_count_distribution and clustered_umi_count_distribution
+    # to a file. This should have an output kind of like DecodeStatistics.
+    # To follow the conventions elsewhere, we probably should create another class
+    # in stats.py similar to DecodeSummary or DecodeStatistics. May even make sense to
+    # have that be mutable and used above instead of the Counter objects diectly
 
     logger.info(f"wrote {_ticker} compounds to: '{out_loc}'")
 

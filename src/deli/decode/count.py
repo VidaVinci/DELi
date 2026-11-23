@@ -100,7 +100,7 @@ def _build_graph_semi_directional(umis: dict[str, int], degree: int = 2) -> dict
     return graph
 
 
-def _count_connected_components(graph: dict[str, list[str]]) -> int:
+def _count_connected_components(graph: dict[str, list[str]]) -> tuple[int, list[int]]:
     """
     Count the number of weakly connected components in a directed graph using DFS.
 
@@ -111,23 +111,27 @@ def _count_connected_components(graph: dict[str, list[str]]) -> int:
 
     Returns
     -------
-    int
-        The number of connected components.
+        The number of connected components and a list of their sizes.
     """
     visited = set()
     count = 0
+    all_component_sizes = []
     for node in graph:
         if node not in visited:
             count += 1
             stack = [node]
             visited.add(node)
+            component_size = 0
             while stack:
+                component_size += 1
                 current = stack.pop()
                 for neighbor in graph[current]:
                     if neighbor not in visited:
                         visited.add(neighbor)
                         stack.append(neighbor)
-    return count
+            all_component_sizes.append(component_size)
+
+    return count, all_component_sizes
 
 
 def raw_count(umis: dict[str, int]) -> int:
@@ -168,7 +172,9 @@ def dedup_count(umis: dict[str, int]) -> int:
     return len(umis)
 
 
-def corrected_count(umis: dict[str, int], method: Literal["cluster", "directional"] = "directional") -> int:
+def corrected_count(
+    umis: dict[str, int], method: Literal["cluster", "directional"] = "directional"
+) -> tuple[int, list[int]]:
     """
     Get the error-corrected count for a set of UMIs
 
@@ -197,8 +203,8 @@ def corrected_count(umis: dict[str, int], method: Literal["cluster", "directiona
 
     Returns
     -------
-    int
-        The error-corrected count of UMIs
+    tuple[int, list[int]]
+        The error-corrected count of UMIs and a list of their component sizes
     """
     if method == "directional":
         graph = _build_graph_semi_directional(umis)  # get the graph of UMIs
@@ -207,4 +213,5 @@ def corrected_count(umis: dict[str, int], method: Literal["cluster", "directiona
     else:
         raise ValueError(f"Unrecognized method '{method}' for corrected_count. Options are ['cluster', 'directional']")
 
-    return _count_connected_components(graph)
+    count, all_component_sizes = _count_connected_components(graph)
+    return count, all_component_sizes
