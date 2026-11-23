@@ -100,18 +100,23 @@ def _build_graph_semi_directional(umis: dict[str, int], degree: int = 2) -> dict
     return graph
 
 
-def _count_connected_components(graph: dict[str, list[str]]) -> tuple[int, list[int]]:
+def _count_connected_components(graph: dict[str, list[str]], umis: dict[str, int]) -> tuple[int, list[int]]:
     """
     Count the number of weakly connected components in a directed graph using DFS.
+
+    The size of a component is the summed UMI count of all nodes (UMIs) in it.
 
     Parameters
     ----------
     graph : dict[str, list[str]]
         Adjacency list representation of the graph.
+    umis : dict[str, int]
+        Map of UMI sequence (graph node) to its count.
 
     Returns
     -------
-        The number of connected components and a list of their sizes.
+    tuple[int, list[int]]
+        The number of connected components and the size (summed UMI count) of each component.
     """
     visited = set()
     count = 0
@@ -123,8 +128,8 @@ def _count_connected_components(graph: dict[str, list[str]]) -> tuple[int, list[
             visited.add(node)
             component_size = 0
             while stack:
-                component_size += 1
                 current = stack.pop()
+                component_size += umis[current]
                 for neighbor in graph[current]:
                     if neighbor not in visited:
                         visited.add(neighbor)
@@ -204,7 +209,7 @@ def corrected_count(
     Returns
     -------
     tuple[int, list[int]]
-        The error-corrected count of UMIs and a list of their component sizes
+        The error-corrected count of UMIs and the size (summed UMI count) of each component
     """
     if method == "directional":
         graph = _build_graph_semi_directional(umis)  # get the graph of UMIs
@@ -213,5 +218,5 @@ def corrected_count(
     else:
         raise ValueError(f"Unrecognized method '{method}' for corrected_count. Options are ['cluster', 'directional']")
 
-    count, all_component_sizes = _count_connected_components(graph)
+    count, all_component_sizes = _count_connected_components(graph, umis)
     return count, all_component_sizes
