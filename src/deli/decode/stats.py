@@ -2,7 +2,7 @@
 
 import json
 import os
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 
 from deli.dels.library import Library
@@ -183,6 +183,91 @@ class DecodeStatistics:
         result.num_failed_building_block_call = data.get("num_failed_building_block_call", 0)
         result.num_failed_ambiguous_building_block_call = data.get("num_failed_ambiguous_building_block_call", 0)
         result.num_failed_umi = data.get("num_failed_umi", 0)
+        return result
+
+
+class UmiCountStatistics:
+    """
+    Track the UMI count distributions observed while counting compounds
+
+    Each distribution maps a count value to the number of times that value was observed.
+
+    Attributes
+    ----------
+    umi_count_distribution: Counter[int]
+        distribution of the number of reads per observed (uncorrected) UMI
+    clustered_umi_count_distribution: Counter[int]
+        distribution of the number of observed UMIs collapsed into each error-corrected UMI;
+        only populated when UMIs are clustered
+    """
+
+    def __init__(self):
+        """Initialize a UmiCountStatistics object"""
+        self.umi_count_distribution: Counter[int] = Counter()
+        self.clustered_umi_count_distribution: Counter[int] = Counter()
+
+    def __add__(self, other) -> "UmiCountStatistics":
+        """Add two UmiCountStatistics objects together"""
+        if not isinstance(other, UmiCountStatistics):
+            raise TypeError(f"unsupported operand type(s) for +: {type(self)} and {type(other)}")
+        result = UmiCountStatistics()
+        result.umi_count_distribution = self.umi_count_distribution + other.umi_count_distribution
+        result.clustered_umi_count_distribution = (
+            self.clustered_umi_count_distribution + other.clustered_umi_count_distribution
+        )
+        return result
+
+    def __str__(self) -> str:
+        """Convert the statistic object to a string (new line separated)"""
+        return "\n".join([f"{key}={val}" for key, val in self.__dict__.items()])
+
+    def __repr__(self) -> str:
+        """Represent the statistic object as string ('; ' separated)"""
+        return "; ".join([f"{key}={val}" for key, val in self.__dict__.items()])
+
+    def to_file(self, out_path: str | os.PathLike):
+        """
+        Write the statistics to a file
+
+        Notes
+        -----
+        Will be in JSON format; distribution keys are written as strings sorted by count value
+
+        Parameters
+        ----------
+        out_path: str or os.PathLike
+            path to write the statistics to
+        """
+        data = {name: {str(k): v for k, v in sorted(dist.items())} for name, dist in self.__dict__.items()}
+        with open(out_path, "w") as out_file:
+            json.dump(data, out_file, indent=4)
+
+    @classmethod
+    def from_file(cls, path: str | os.PathLike) -> "UmiCountStatistics":
+        """
+        Read in a UmiCountStatistics object from a file
+
+        Must be in JSON format
+
+        Parameters
+        ----------
+        path: str or os.PathLike
+            path to read the statistics from
+
+        Returns
+        -------
+        UmiCountStatistics
+        """
+        result = cls()
+        with open(path, "r") as in_file:
+            data = json.load(in_file)
+
+        result.umi_count_distribution = Counter(
+            {int(key): int(val) for key, val in data.get("umi_count_distribution", {}).items()}
+        )
+        result.clustered_umi_count_distribution = Counter(
+            {int(key): int(val) for key, val in data.get("clustered_umi_count_distribution", {}).items()}
+        )
         return result
 
 

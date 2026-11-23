@@ -2,6 +2,7 @@
 
 """command line functions for deli"""
 
+import collections
 import configparser
 import csv
 import datetime
@@ -1007,9 +1008,10 @@ def collect_decodes(ctx, decoded_reads, score_threshold, out_loc, compress):
 @click.option("--keep-dedup-count", "-d", is_flag=True, help="Keep deduplicated count in output; ignored unless --cluster-umis is used")
 @click.option("--output-format", "-f", type=click.Choice(["tsv", "gzip", "parquet"]), default="tsv", help="Output file format")
 @click.option("--use-tqdm", "-t", is_flag=True, help="Use tqdm to show progress")
+@click.option("--out-loc-count-distribution", type=click.Path(), required=False, default=None, help="Custom path for the JSON output of UMI count distributions")
 @click.pass_context
 @with_deli_quote
-def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_count, keep_dedup_count, output_format, use_tqdm):
+def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_count, keep_dedup_count, output_format, use_tqdm, out_loc_count_distribution):
     """
     Count compounds from collected decoded file
 
@@ -1019,6 +1021,7 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
     NOTE: "gzip" output format will generate a gzip compressed TSV file. Writing to output occurs in batches.
     """
     from deli.decode.count import corrected_count
+    from deli.decode.stats import UmiCountStatistics
     import json
 
     # check conditional imports
@@ -1061,6 +1064,18 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
         is_compressed=compress,
     )
 
+    # prepare the output path of the UMI count distributions
+    if out_loc_count_distribution is None:
+        out_loc_count_distribution = Path("./umi_count_distribution.json")
+    out_loc_count_distribution = _standardize_and_validate_output_loc(
+        out_loc_count_distribution,
+        is_file=True,
+        can_exist=True,
+        overwrite=True,
+        extension=".json",
+        is_compressed=False,
+    )
+
     # initialize writer
     if output_format == "tsv":
         if not compress:
@@ -1097,6 +1112,7 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
     _batch_size = 5000
     _batch = []
     _ticker = 0
+    count_stats = UmiCountStatistics()
     with _open_text_file(Path(collected_decodes)) as in_file:
         for line in tqdm(in_file, desc="Counting compounds", disable=not use_tqdm):
             _ticker += 1
@@ -1106,10 +1122,13 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
             raw_count = sum([count_struct["c"] for count_struct in cpd_info["umi_counts"]])
             dedup_count = len(cpd_info["umi_counts"])
             count = dedup_count  # default to dedup count if not clustering
+            # count the uncorrected umi distribution counts
+            count_stats.umi_count_distribution.update(count_struct["c"] for count_struct in cpd_info["umi_counts"])
             if cluster_umis:
                 umi_counts_by_seq = {item["k"]: item["c"] for item in cpd_info["umi_counts"]}
-                count = corrected_count(umi_counts_by_seq)
-
+                count, all_component_sizes = corrected_count(umi_counts_by_seq)
+                # track the *corrected* umi counts as well
+                count_stats.clustered_umi_count_distribution.update(all_component_sizes)
             # prepare output info
             row = {
                 "library_id": cpd_info["library_id"],
@@ -1138,6 +1157,10 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
     logger.debug("closed output file")
 
     logger.info(f"wrote {_ticker} compounds to: '{out_loc}'")
+
+    # write the count distributions
+    count_stats.to_file(out_loc_count_distribution)
+    logger.info(f"wrote count distributions to: '{out_loc_count_distribution}'")
 
 
 @decode_group.command(name="report")
