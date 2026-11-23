@@ -186,7 +186,7 @@ class DecodeStatistics:
         return result
 
 
-class CountStatistics:
+class UmiCountStatistics:
     """
     Track the UMI count distributions observed while counting compounds
 
@@ -202,15 +202,15 @@ class CountStatistics:
     """
 
     def __init__(self):
-        """Initialize a CountStatistics object"""
+        """Initialize a UmiCountStatistics object"""
         self.umi_count_distribution: Counter[int] = Counter()
         self.clustered_umi_count_distribution: Counter[int] = Counter()
 
-    def __add__(self, other) -> "CountStatistics":
-        """Add two CountStatistics objects together"""
-        if not isinstance(other, CountStatistics):
+    def __add__(self, other) -> "UmiCountStatistics":
+        """Add two UmiCountStatistics objects together"""
+        if not isinstance(other, UmiCountStatistics):
             raise TypeError(f"unsupported operand type(s) for +: {type(self)} and {type(other)}")
-        result = CountStatistics()
+        result = UmiCountStatistics()
         result.umi_count_distribution = self.umi_count_distribution + other.umi_count_distribution
         result.clustered_umi_count_distribution = (
             self.clustered_umi_count_distribution + other.clustered_umi_count_distribution
@@ -243,9 +243,9 @@ class CountStatistics:
             json.dump(data, out_file, indent=4)
 
     @classmethod
-    def from_file(cls, path: str | os.PathLike) -> "CountStatistics":
+    def from_file(cls, path: str | os.PathLike) -> "UmiCountStatistics":
         """
-        Read in a CountStatistics object from a file
+        Read in a UmiCountStatistics object from a file
 
         Must be in JSON format
 
@@ -256,7 +256,7 @@ class CountStatistics:
 
         Returns
         -------
-        CountStatistics
+        UmiCountStatistics
         """
         result = cls()
         with open(path, "r") as in_file:

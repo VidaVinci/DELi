@@ -1021,7 +1021,7 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
     NOTE: "gzip" output format will generate a gzip compressed TSV file. Writing to output occurs in batches.
     """
     from deli.decode.count import corrected_count
-    from deli.decode.stats import CountStatistics
+    from deli.decode.stats import UmiCountStatistics
     import json
 
     # check conditional imports
@@ -1112,7 +1112,7 @@ def count_compounds(ctx, collected_decodes, out_loc, cluster_umis, keep_raw_coun
     _batch_size = 5000
     _batch = []
     _ticker = 0
-    count_stats = CountStatistics()
+    count_stats = UmiCountStatistics()
     with _open_text_file(Path(collected_decodes)) as in_file:
         for line in tqdm(in_file, desc="Counting compounds", disable=not use_tqdm):
             _ticker += 1
